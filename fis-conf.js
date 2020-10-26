@@ -4,7 +4,6 @@
 const path = require('path');
 const fs = require('fs');
 const package = require('./package.json');
-const parserMarkdown = require('./scripts/md-parser');
 fis.get('project.ignore').push('public/**', 'gh-pages/**');
 // 配置只编译哪些文件。
 
@@ -107,7 +106,6 @@ fis.match('monaco-editor/min/**.js', {
 fis.match('/docs/**.md', {
   rExt: 'js',
   parser: [
-    parserMarkdown,
     function (contents, file) {
       return contents.replace(/\bhref=\\('|")(.+?)\\\1/g, function (
         _,
@@ -503,7 +501,6 @@ if (fis.project.currentMedia() === 'publish') {
     isMod: true,
     useHash: true,
     parser: [
-      parserMarkdown,
       function (contents, file) {
         return contents.replace(/\bhref=\\('|")(.+?)\\\1/g, function (
           _,
