@@ -7,7 +7,7 @@ import {
 } from './Options';
 import cx from 'classnames';
 import Button from '../../components/Button';
-import {SchemaNode, Schema, Action} from '../../types';
+import { SchemaNode, Schema, Action } from '../../types';
 import find from 'lodash/find';
 import {
   anyChanged,
@@ -19,12 +19,12 @@ import {
 } from '../../utils/helper';
 import findIndex from 'lodash/findIndex';
 import Html from '../../components/Html';
-import {filter} from '../../utils/tpl';
-import {Icon} from '../../components/icons';
-import {isEmpty} from '../../utils/helper';
-import {dataMapping} from '../../utils/tpl-builtin';
-import {SchemaCollection, SchemaTpl} from '../../Schema';
-import {CRUDSchema} from '../CRUD';
+import { filter } from '../../utils/tpl';
+import { Icon } from '../../components/icons';
+import { isEmpty } from '../../utils/helper';
+import { dataMapping } from '../../utils/tpl-builtin';
+import { SchemaCollection, SchemaTpl } from '../../Schema';
+import { CRUDSchema } from '../CRUD';
 
 /**
  * Picker
@@ -80,7 +80,7 @@ export interface PickerState {
 export default class PickerControl extends React.PureComponent<
   PickerProps,
   any
-> {
+  > {
   static propsList: Array<string> = [
     'modalMode',
     'pickerSchema',
@@ -140,7 +140,7 @@ export default class PickerControl extends React.PureComponent<
   }
 
   fetchOptions() {
-    const {value, formItem, valueField, labelField, source, data} = this.props;
+    const { value, formItem, valueField, labelField, source, data } = this.props;
     let selectedOptions: any;
 
     if (
@@ -149,7 +149,7 @@ export default class PickerControl extends React.PureComponent<
       ((selectedOptions = formItem.getSelectedOptions(value)) &&
         (!selectedOptions.length ||
           selectedOptions[0][valueField || 'value'] !==
-            selectedOptions[0][labelField || 'label']))
+          selectedOptions[0][labelField || 'label']))
     ) {
       return;
     }
@@ -347,7 +347,7 @@ export default class PickerControl extends React.PureComponent<
 
   @autobind
   clearValue() {
-    const {onChange, resetValue} = this.props;
+    const { onChange, resetValue } = this.props;
 
     onChange(resetValue !== void 0 ? resetValue : '');
   }
@@ -381,9 +381,9 @@ export default class PickerControl extends React.PureComponent<
               {labelTpl ? (
                 <Html html={filter(labelTpl, item)} />
               ) : (
-                getVariable(item, labelField || 'label') ||
-                getVariable(item, 'id')
-              )}
+                  getVariable(item, labelField || 'label') ||
+                  getVariable(item, 'id')
+                )}
             </span>
           </div>
         ))}
@@ -392,7 +392,7 @@ export default class PickerControl extends React.PureComponent<
   }
 
   @autobind
-  renderBody({popOverContainer}: any = {}) {
+  renderBody({ popOverContainer }: any = {}) {
     const {
       render,
       selectedOptions,
@@ -431,106 +431,107 @@ export default class PickerControl extends React.PureComponent<
       value,
       selectedOptions,
       translate: __,
-      popOverContainer
+      popOverContainer,
+      theme
     } = this.props;
     return (
       <div className={cx(`PickerControl`, className)}>
         {embed ? (
           <div className={cx('Picker')}>
-            {this.renderBody({popOverContainer})}
+            {this.renderBody({ popOverContainer })}
           </div>
         ) : (
-          <div
-            className={cx(`Picker`, {
-              'Picker--single': !multiple,
-              'Picker--multi': multiple,
-              'is-focused': this.state.isFocused,
-              'is-disabled': disabled
-            })}
-          >
-            <div onClick={this.handleClick} className={cx('Picker-input')}>
-              {!selectedOptions.length && placeholder ? (
-                <div className={cx('Picker-placeholder')}>
-                  {__(placeholder)}
+            <div
+              className={cx(`Picker`, {
+                'Picker--single': !multiple,
+                'Picker--multi': multiple,
+                'is-focused': this.state.isFocused,
+                'is-disabled': disabled
+              })}
+            >
+              <div onClick={this.handleClick} className={cx('Picker-input')}>
+                {!selectedOptions.length && placeholder ? (
+                  <div className={cx('Picker-placeholder')}>
+                    {__(placeholder)}
+                  </div>
+                ) : null}
+
+                <div className={cx('Picker-valueWrap')}>
+                  {this.renderValues()}
+
+                  <input
+                    onChange={noop}
+                    value={''}
+                    ref={this.input}
+                    onKeyDown={this.handleKeyDown}
+                    onFocus={this.handleFocus}
+                    onBlur={this.handleBlur}
+                  />
                 </div>
-              ) : null}
 
-              <div className={cx('Picker-valueWrap')}>
-                {this.renderValues()}
+                {clearable && !disabled && selectedOptions.length ? (
+                  <a onClick={this.clearValue} className={cx('Picker-clear')}>
+                    <Icon icon="close" className="icon" />
+                  </a>
+                ) : null}
 
-                <input
-                  onChange={noop}
-                  value={''}
-                  ref={this.input}
-                  onKeyDown={this.handleKeyDown}
-                  onFocus={this.handleFocus}
-                  onBlur={this.handleBlur}
-                />
+                <span onClick={this.open} className={cx('Picker-btn')}>
+                  <Icon icon={modalMode === 'drawer' && theme === 'mobile' ? 'right-arrow' : 'window-restore'} className="icon" />
+                </span>
               </div>
 
-              {clearable && !disabled && selectedOptions.length ? (
-                <a onClick={this.clearValue} className={cx('Picker-clear')}>
-                  <Icon icon="close" className="icon" />
-                </a>
-              ) : null}
-
-              <span onClick={this.open} className={cx('Picker-btn')}>
-                <Icon icon="window-restore" className="icon" />
-              </span>
-            </div>
-
-            {render(
-              'modal',
-              {
-                title: __('请选择'),
-                size: size,
-                type: modalMode,
-                body: {
-                  children: this.renderBody
+              {render(
+                'modal',
+                {
+                  title: __('请选择'),
+                  size: size,
+                  type: modalMode,
+                  body: {
+                    children: this.renderBody
+                  }
+                },
+                {
+                  key: 'modal',
+                  lazyRender: !!source,
+                  onConfirm: this.handleModalConfirm,
+                  onClose: this.close,
+                  show: this.state.isOpened
                 }
-              },
-              {
-                key: 'modal',
-                lazyRender: !!source,
-                onConfirm: this.handleModalConfirm,
-                onClose: this.close,
-                show: this.state.isOpened
-              }
-            )}
-          </div>
-          // <div className={`${ns}Picker`}>
-          //         {this.renderValues()}
+              )}
+            </div>
+            // <div className={`${ns}Picker`}>
+            //         {this.renderValues()}
 
-          //         <Button
-          //             classPrefix={ns}
-          //             className={`${ns}Picker-pickBtn`}
-          //             tooltip="点击选择"
-          //             tooltipContainer={env && env.getModalContainer ? env.getModalContainer : undefined}
-          //             level="info"
-          //             size="sm"
-          //             disabled={disabled}
-          //             onClick={this.open}
-          //             iconOnly
-          //         >
-          //         选定
-          //         </Button>
+            //         <Button
+            //             classPrefix={ns}
+            //             className={`${ns}Picker-pickBtn`}
+            //             tooltip="点击选择"
+            //             tooltipContainer={env && env.getModalContainer ? env.getModalContainer : undefined}
+            //             level="info"
+            //             size="sm"
+            //             disabled={disabled}
+            //             onClick={this.open}
+            //             iconOnly
+            //         >
+            //         选定
+            //         </Button>
 
-          //         {render('modal', {
-          //             title: '请选择',
-          //             size: size,
-          //             type: modalMode,
-          //             body: {
-          //                 children: this.renderBody
-          //             }
-          //         }, {
-          //             key: 'modal',
-          //             lazyRender: !!source,
-          //             onConfirm: this.handleModalConfirm,
-          //             onClose: this.close,
-          //             show: this.state.isOpened
-          //         })}
-          //     </div>
-        )}
+            //         {render('modal', {
+            //             title: '请选择',
+            //             size: size,
+            //             type: modalMode,
+            //             body: {
+            //                 children: this.renderBody
+            //             }
+            //         }, {
+            //             key: 'modal',
+            //             lazyRender: !!source,
+            //             onConfirm: this.handleModalConfirm,
+            //             onClose: this.close,
+            //             show: this.state.isOpened
+            //         })}
+            //     </div>
+          )}
       </div>
     );
   }
@@ -541,4 +542,4 @@ export default class PickerControl extends React.PureComponent<
   autoLoadOptionsFromSource: false,
   sizeMutable: false
 })
-export class PickerControlRenderer extends PickerControl {}
+export class PickerControlRenderer extends PickerControl { }
