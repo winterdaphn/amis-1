@@ -2,9 +2,9 @@ import React from 'react';
 import NotFound from '../../src/components/404';
 import Layout from '../../src/components/Layout';
 import AsideNav from '../../src/components/AsideNav';
-import {AlertComponent, ToastComponent} from '../../src/components/index';
-import {mapTree} from '../../src/utils/helper';
-import {Icon} from '../../src/components/icons';
+import { AlertComponent, ToastComponent } from '../../src/components/index';
+import { mapTree } from '../../src/utils/helper';
+import { Icon } from '../../src/components/icons';
 import '../../src/locale/en';
 import {
   Router,
@@ -18,10 +18,10 @@ import {
 } from 'react-router';
 import Select from '../../src/components/Select';
 import DocSearch from './DocSearch';
-import {groupBy} from 'lodash';
+import { groupBy } from 'lodash';
 import classnames from 'classnames';
-import Doc, {docs} from './Doc';
-import Example, {examples} from './Example';
+import Doc, { docs } from './Doc';
+import Example, { examples } from './Example';
 
 // @ts-ignore
 import Logo from '../static/logo.svg';
@@ -52,6 +52,11 @@ const themes = [
     label: 'Dark',
     ns: 'dark-',
     value: 'dark'
+  },
+  {
+    label: 'Mobile',
+    ns: 'mobile-',
+    value: 'mobile'
   }
 ];
 
@@ -257,7 +262,7 @@ export class App extends React.PureComponent {
               value={this.state.locale || 'zh-cn'}
               options={locales}
               onChange={locale => {
-                this.setState({locale: locale.value});
+                this.setState({ locale: locale.value });
                 localStorage.setItem('locale', locale.value);
               }}
             />
@@ -270,7 +275,7 @@ export class App extends React.PureComponent {
               value={this.state.theme}
               options={this.state.themes}
               onChange={theme => {
-                this.setState({theme});
+                this.setState({ theme });
                 localStorage.setItem(
                   'themeIndex',
                   this.state.themes.indexOf(theme)
@@ -325,14 +330,13 @@ export class App extends React.PureComponent {
               );
               !isOpen && this.toggleOpen(e, nav);
             }}
-            // to={`${path || (hasChildren && nav.children[0].path)}`}
+          // to={`${path || (hasChildren && nav.children[0].path)}`}
           >
             {nav.label}
             {hasChildren ? (
               <i
-                className={`iconfont icon-xialajiantou ${
-                  isOpen ? '' : 'is-flipped'
-                }`}
+                className={`iconfont icon-xialajiantou ${isOpen ? '' : 'is-flipped'
+                  }`}
                 onClick={e => this.toggleOpen(e, nav)}
               ></i>
             ) : null}
@@ -340,9 +344,9 @@ export class App extends React.PureComponent {
 
           {isOpen
             ? this.renderNavigation(nav.children || [], {
-                ...nav,
-                path
-              })
+              ...nav,
+              path
+            })
             : null}
         </div>
       );
@@ -359,8 +363,8 @@ export class App extends React.PureComponent {
         boxed={true}
         offScreen={this.state.offScreen}
         header={this.state.headerVisible ? this.renderHeader() : null}
-        // folded={this.state.asideFolded}
-        // aside={this.renderAside()}
+      // folded={this.state.asideFolded}
+      // aside={this.renderAside()}
       >
         <ToastComponent theme={theme.value} locale={this.state.locale} />
         <AlertComponent theme={theme.value} locale={this.state.locale} />
@@ -382,7 +386,7 @@ export class App extends React.PureComponent {
           {/* 完了加个动画吧 */}
           <div
             className={`Backtop ${this.state.scrollTop > 450 ? 'visible' : ''}`}
-            onClick={() => scrollTo({top: 0})}
+            onClick={() => scrollTo({ top: 0 })}
           >
             <i className="fa fa-rocket"></i>
           </div>
@@ -441,7 +445,7 @@ function navigations2route(pathPrefix = DocPathPrefix, navigations) {
   return routes;
 }
 
-export default function entry({pathPrefix}) {
+export default function entry({ pathPrefix }) {
   // PathPrefix = pathPrefix || DocPathPrefix;
   return (
     <Router history={browserHistory}>

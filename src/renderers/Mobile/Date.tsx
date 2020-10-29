@@ -3,6 +3,7 @@ import moment from 'moment';
 import { FormItem } from '../Form/Item';
 import DateControl from '../Form/Date';
 import DatePicker from 'antd-mobile/lib/date-picker';
+import { Icon } from '../../components/icons';
 
 export default class MobileDateControl extends DateControl {
   static defaultProps = {
@@ -55,7 +56,10 @@ export default class MobileDateControl extends DateControl {
     return (
       <div className={cx(`DateControl`, className)}>
         <DatePicker mode={mode} value={date} extra={placeholder} format={inputFormat} onOk={this.handleChange.bind(this)}>
-          <span>{date ? formatValue : placeholder}</span>
+          <div className="a-DatePicker">
+            <span className="a-DatePicker-placeholder">{date ? formatValue : placeholder}</span>
+            <Icon icon="calendar" className="icon" />
+          </div>
         </DatePicker>
       </div>
     );

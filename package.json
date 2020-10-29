@@ -1,6 +1,6 @@
 {
   "name": "@winterdaph/amis",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "一种MIS页面生成工具，基于amis二次开发",
   "main": "lib/index.js",
   "scripts": {
