@@ -18,8 +18,8 @@ import {
   Schema,
   uniqueArray
 } from 'ts-json-schema-generator';
-import {IntersectionTypeFormatter as MyIntersectionTypeFormatter} from './TypeFormatter/IntersectionTypeFormatter';
-import {IntersectionNodeParser as MyIntersectionNodeParser} from './NodeParser/IntersectionNodeParser';
+import { IntersectionTypeFormatter as MyIntersectionTypeFormatter } from './TypeFormatter/IntersectionTypeFormatter';
+import { IntersectionNodeParser as MyIntersectionNodeParser } from './NodeParser/IntersectionNodeParser';
 
 /**
  * 程序主入口
@@ -88,7 +88,7 @@ function copyAnyOf(
     definationKey: string;
   }>
 ) {
-  list.forEach(({referenceKey, definationKey, patternProperties}) => {
+  list.forEach(({ referenceKey, definationKey, patternProperties }) => {
     const definition: any = schema.definitions![referenceKey];
 
     if (Array.isArray(definition.anyOf)) {
@@ -222,8 +222,7 @@ main().catch(e => {
       );
 
       console.log(
-        `\x1b[36m${diagnostic.file!.fileName}:${poistion.line + 1}:${
-          poistion.character + 1
+        `\x1b[36m${diagnostic.file!.fileName}:${poistion.line + 1}:${poistion.character + 1
         }\x1b[0m - \x1b[31merror\x1b[0m\n`
       );
       console.log(diagnostic.messageText);
@@ -235,8 +234,7 @@ main().catch(e => {
     const sourceFile = node.getSourceFile();
     const position = sourceFile.getLineAndCharacterOfPosition(node.pos);
     console.log(
-      `\x1b[36m${sourceFile.fileName}:${position.line + 1}:${
-        position.character + 1
+      `\x1b[36m${sourceFile.fileName}:${position.line + 1}:${position.character + 1
       }\x1b[0m - \x1b[31m类型不支持转 JSON Schema\x1b[0m\n`
     );
   } else if (e instanceof UnknownTypeError) {

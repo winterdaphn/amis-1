@@ -184,7 +184,8 @@ fis.match('*.html:jsx', {
 fis.hook('node_modules', {
   shimProcess: false,
   shimGlobal: false,
-  shimBuffer: false
+  shimBuffer: false,
+  mergeLevel: 1
   // shutup: true
 });
 fis.hook('commonjs', {

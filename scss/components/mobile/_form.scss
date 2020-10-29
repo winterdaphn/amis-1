@@ -1,0 +1,20 @@
+.#{$ns}Form-item {
+  &.has-border {
+    @include border($Form-item-border, $Form-item-borderRadius);
+  }
+
+  .#{$ns}Form-label {
+    padding-left: $Form-label-paddingLeft;
+
+    .#{$ns}Form-star {
+      position: static;
+      margin-left: $Form-star-marginLeft;
+    }
+  }
+
+  @media (min-width: 576px) {
+    &--horizontal .#{$ns}Form-label {
+      padding-left: 0;
+    }
+  }
+}

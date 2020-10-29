@@ -1,0 +1,36 @@
+@mixin border ($border, $radius) {
+  position: relative;
+
+  @media screen and (-webkit-min-device-pixel-ratio: 1) {
+    border: {
+      width: $border;
+      radius: $radius;
+      color: $Form-input-borderColor;
+      style: solid;
+    }
+  }
+
+  @media screen and (-webkit-min-device-pixel-ratio: 2) {
+    &:before {
+      content: "";
+      pointer-events: none;
+      /* 防止点击触发 */
+      box-sizing: border-box;
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      left: 0;
+      top: 0;
+
+      border: {
+        width: $border;
+        radius: $radius;
+        color: $Form-input-borderColor;
+        style: solid;
+      }
+
+      transform: (scale(0.5));
+      transform-origin: 0 0;
+    }
+  }
+}
