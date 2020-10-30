@@ -42,7 +42,8 @@ export default class MobileDateControl extends DateControl {
       value,
       mode,
       placeholder,
-      inputFormat
+      inputFormat,
+      classPrefix
     } = this.props;
     let date = value;
     let formatValue = '';
@@ -56,8 +57,8 @@ export default class MobileDateControl extends DateControl {
     return (
       <div className={cx(`DateControl`, className)}>
         <DatePicker mode={mode} value={date} extra={placeholder} format={inputFormat} onOk={this.handleChange.bind(this)}>
-          <div className="a-DatePicker">
-            <span className="a-DatePicker-placeholder">{date ? formatValue : placeholder}</span>
+          <div className={`${classPrefix}-DatePicker`}>
+            <span className={`${classPrefix}-DatePicker-placeholder`}>{date ? formatValue : placeholder}</span>
             <Icon icon="calendar" className="icon" />
           </div>
         </DatePicker>
