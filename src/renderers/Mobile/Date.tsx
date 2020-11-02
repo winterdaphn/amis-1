@@ -5,11 +5,26 @@ import DateControl from '../Form/Date';
 import DatePicker from 'antd-mobile/lib/date-picker';
 import { Icon } from '../../components/icons';
 
+function normalizeValue(value: any, format?: string) {
+  if (!value || value === '0') {
+    return undefined;
+  }
+  const v = moment(value, format, true);
+  return v.isValid() ? v : undefined;
+}
+
 export default class MobileDateControl extends DateControl {
   static defaultProps = {
     ...DateControl.defaultProps,
     mode: 'datetime'
   };
+
+  clearValue(e: React.MouseEvent<any>) {
+    e.preventDefault();
+    e.stopPropagation();
+    const onChange = this.props.onChange;
+    onChange('');
+  }
 
   handleChange(value: Date) {
     const {
@@ -43,7 +58,9 @@ export default class MobileDateControl extends DateControl {
       mode,
       placeholder,
       inputFormat,
-      classPrefix
+      classPrefix: ns,
+      clearable,
+      disabled
     } = this.props;
     let date = value;
     let formatValue = '';
@@ -57,8 +74,13 @@ export default class MobileDateControl extends DateControl {
     return (
       <div className={cx(`DateControl`, className)}>
         <DatePicker mode={mode} value={date} extra={placeholder} format={inputFormat} onOk={this.handleChange.bind(this)}>
-          <div className={`${classPrefix}-DatePicker`}>
-            <span className={`${classPrefix}-DatePicker-placeholder`}>{date ? formatValue : placeholder}</span>
+          <div className={`${ns}DatePicker`}>
+            <span className={`${ns}DatePicker-placeholder`}>{date ? formatValue : placeholder}</span>
+            {clearable && !disabled && normalizeValue(value, format) ? (
+              <a className={`${ns}DatePicker-clear`} onClick={this.clearValue.bind(this)}>
+                <Icon icon="close" className="icon" />
+              </a>
+            ) : null}
             <Icon icon="calendar" className="icon" />
           </div>
         </DatePicker>

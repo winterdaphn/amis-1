@@ -551,7 +551,7 @@ export default {
           type: 'divider'
         },
         {
-          type: 'date',
+          type: 'mobile-date',
           name: 'date',
           inline: true,
           label: '日期'

@@ -145,6 +145,7 @@ import './renderers/QRCode';
 import './renderers/Icon';
 import './renderers/Carousel';
 import './renderers/Mobile/Date';
+import './renderers/Mobile/SubForm';
 import Scoped, { ScopedContext } from './Scoped';
 
 import { FormItem } from './renderers/Form/Item';

@@ -53,6 +53,36 @@ export default {
               }
             ]
           }
+        }, {
+          type: 'mobile-form',
+          renderLabel: false,
+          label: '移动端子表单',
+          name: 'subForm3',
+          labelField: 'a',
+          buttons: [{
+            type: 'dropdown-button',
+            label: "新增明细",
+            buttons: [{
+              type: 'button',
+              actionType: 'openSubForm',
+              label: '手动录入'
+            }]
+          }],
+          form: {
+            title: '子表单',
+            controls: [
+              {
+                name: 'a',
+                type: 'text',
+                label: 'Foo'
+              },
+              {
+                name: 'b',
+                type: 'switch',
+                label: 'Boo'
+              }
+            ]
+          }
         }
       ]
     }

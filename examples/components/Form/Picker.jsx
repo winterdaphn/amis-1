@@ -21,6 +21,7 @@ export default {
         type: "picker",
         name: "type",
         label: "单选",
+        modalMode: 'drawer',
         value: 1,
         inline: true,
         options: [
